@@ -1,0 +1,43 @@
+let startTime;
+let running = false;
+
+function startStopwatch() {
+  if (!running) {
+    startTime = new Date().getTime();
+    running = true;
+    updateStopwatch();
+    document.getElementById('startBtn').innerHTML = 'Pause';
+  } else {
+    running = false;
+    document.getElementById('startBtn').innerHTML = 'Resume';
+  }
+}
+
+function stopStopwatch() {
+  running = false;
+  document.getElementById('startBtn').innerHTML = 'Start';
+}
+
+function resetStopwatch() {
+  running = false;
+  document.getElementById('startBtn').innerHTML = 'Start';
+  document.getElementById('display').innerHTML = '00:00:00';
+}
+
+function updateStopwatch() {
+  if (running) {
+    let currentTime = new Date().getTime();
+    let elapsed = new Date(currentTime - startTime);
+    let hours = elapsed.getUTCHours();
+    let minutes = elapsed.getUTCMinutes();
+    let seconds = elapsed.getUTCSeconds();
+
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    document.getElementById('display').innerHTML = hours + ':' + minutes + ':' + seconds;
+
+    setTimeout(updateStopwatch, 1000);
+  }
+}
